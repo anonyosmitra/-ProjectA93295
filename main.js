@@ -17,5 +17,5 @@ var server = https.createServer(options, app).listen(port, function(){
 });
 
 app.get('/', function (req, res) {
-    res.sendFile('home.html');
+    res.sendFile('/home/ProjectA93295/express/home.html');
 });
