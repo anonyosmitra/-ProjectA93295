@@ -1,19 +1,22 @@
-const crypto = require('crypto'),
-      fs = require("fs"),
-      http = require("http");
+var fs = require('fs'),
+    http = require('http'),
+    https = require('https'),
+    express = require('express');
 
-var privateKey = fs.readFileSync('keys/privkey.pem').toString();
-var certificate = fs.readFileSync('keys/fullchain.pem').toString();
+var port = 5015;
 
-var credentials = crypto.createCredentials({key: privateKey, cert: certificate});
-
-var handler = function (req, res) {
-   console.log(req)
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World\n');
+var options = {
+    key: fs.readFileSync('keys/privkey.pem'),
+    cert: fs.readFileSync('keys/fullchain.pem'),
 };
 
-var server = http.createServer();
-server.setSecure(credentials);
-server.addListener("request", handler);
-server.listen(5015)
+var app = express();
+
+var server = https.createServer(options, app).listen(port, function(){
+  console.log("Express server listening on port " + port);
+});
+
+app.get('/', function (req, res) {
+    res.writeHead(200);
+    res.end("hello world\n");
+});
