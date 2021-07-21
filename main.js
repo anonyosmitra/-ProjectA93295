@@ -8,6 +8,7 @@ var certificate = fs.readFileSync('keys/fullchain.pem').toString();
 var credentials = crypto.createCredentials({key: privateKey, cert: certificate});
 
 var handler = function (req, res) {
+   console.log(req)
   res.writeHead(200, {'Content-Type': 'text/plain'});
   res.end('Hello World\n');
 };
