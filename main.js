@@ -17,6 +17,5 @@ var server = https.createServer(options, app).listen(port, function(){
 });
 
 app.get('/', function (req, res) {
-    res.writeHead(200);
-    res.end("hello world\n");
+    res.sendFile('home.html');
 });
